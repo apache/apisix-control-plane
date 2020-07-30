@@ -20,7 +20,7 @@ github:
     homepage: https://apisix.apache.org/
     labels:
       - control-plane
-      - CP
+      - cp
       - cloud-native
       - api-gateway
       - go
@@ -34,6 +34,10 @@ github:
       - kubernetes
       - docker
       - cluster
+
+    features:
+      issues: true
+      projects: true
 
     enabled_merge_buttons:
       squash:  true

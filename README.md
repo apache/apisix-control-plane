@@ -12,3 +12,4 @@ We can use `yaml` to define the proxy behavior of APISIX
 ## DISCUSS
 Here are some examples of `yaml` and we can add comments here.
 https://github.com/apache/apisix-control-plane/issues/3
+We can also submit a PR to modify this [document](doc/yaml_struct.md).

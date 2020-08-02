@@ -1,10 +1,12 @@
 ## Currently, 4 types are defined, namely
+
 1.Gateway
 2.Traffic distribution rules
 3.Define the target service
 4.Plug-in extension
 
 ### Gateway
+
 For edge traffic, extract the host separately and define a Gateway type
 
 ```yaml
@@ -19,6 +21,7 @@ servers:
    - "a.foo.com"
    - "b.foo.com"
 ```
+
 |  object/field   | describition |
 |  ----  | ----  |
 | Gateway  | the type for Edge traffic  |
@@ -60,6 +63,7 @@ http:
     version: v2
 
 ```
+
 |  object/field   | describition |
 |  ----  | ----  |
 |  Rule  | the rule type for traffic |
@@ -87,6 +91,7 @@ subsets:
       tag: v2
 
 ```
+
 |  object/field   | describition |
 |  ----  | ----  |
 |  destinations  | Target service |
@@ -94,6 +99,7 @@ subsets:
 | destinations.subsets | Target service collection |
 
 ### Plug-in extension
+
 The logic of the plugin itself is not defined here, only known plugins will be referenced here
 
 ```yaml
@@ -112,7 +118,9 @@ sort:
 ```
 
 ### A complete demo
+
 1. Use APISIX Admin API
+
 ```shell
 curl -XPUT http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -d '
 {
@@ -155,7 +163,9 @@ curl -XPUT http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034
 }'
 
 ```
+
 2. Use YAML
+
 ```yaml
 kind:Gateway
 name: foo-gw

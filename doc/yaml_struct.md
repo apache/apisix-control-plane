@@ -9,15 +9,15 @@ For edge traffic, extract the host separately and define a Gateway type
 
 ```yaml
 kind:Gateway
-name: baidu-gw
+name: foo-gw
 servers:
  - port:
      number: 80
      name: http
      protocol: HTTP
    hosts:
-   - "a.domain.com"
-   - "b.domain.com"
+   - "a.foo.com"
+   - "b.foo.com"
 ```
 |  object/field   | describition |
 |  ----  | ----  |
@@ -33,18 +33,18 @@ servers:
 kind: Rule
 name: xxx-rules
 hosts:
-- "domain.com"
+- "a.foo.com"
 gateways:
-- baidu-gw
+- foo-gw
 http:
 - route:
  - destination:
      port: 28002
-     host: baidu-server
-     subset: baidu-v1
+     host: foo-server
+     subset: foo-v1
      weight: 10
  label：
-    app: baidu
+    app: foo
     version: v1
   match:
   - headers:
@@ -53,10 +53,10 @@ http:
 - route:
   - destination:
        port: 28002
-       host: baidu-server
+       host: foo-server
        subset: v2
   label:
-    app: baidu
+    app: foo
     version: v2
 
 ```
@@ -74,10 +74,10 @@ http:
 
 ```yaml
 kind: destinations
-name: baidu-dest
-host: baidu-server
+name: foo-dest
+host: foo-server
 subsets:
-- name: baidu-v1
+- name: foo-v1
   ips：
   - 127.0.0.1
   - 127.0.0.2
@@ -100,7 +100,7 @@ The logic of the plugin itself is not defined here, only known plugins will be r
 kind：Plugin
 selector：
   labels：
-     app: baidu
+     app: foo
 sort:
 - name: limit-count
   conf:
@@ -125,7 +125,7 @@ curl -XPUT http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034
         ["arg_age", ">", "18"]
     ],
     "hosts": [
-        "baidu.com"
+        "foo.com"
     ],
     "upstream": {
         "type": "roundrobin",
@@ -144,7 +144,7 @@ curl -XPUT http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034
     	"proxy-rewrite":{
     		"uri": "/test/home.html",
             "scheme": "http",
-            "host": "baidu.com",
+            "host": "foo.com",
             "headers": {
                 "X-Api-Version": "v1",
                 "X-Api-Engine": "apisix",
@@ -158,31 +158,31 @@ curl -XPUT http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034
 2. Use YAML
 ```yaml
 kind:Gateway
-name: baidu-gw
+name: foo-gw
 servers:
  - port:
      number: 80
      name: http
      protocol: HTTP
    hosts:
-   - "baidu.com"
+   - "foo.com"
 
 -----------------
 
 kind: Rule
-name: baidu-rules
+name: foo-rules
 hosts:
-- "baidu.com"
+- "foo.com"
 gateways:
-- baidu-gw
+- foo-gw
 http:
 - route:
   - destination:
        port: 8080
-       host: baidu-server
-       subset: baidu-v1
+       host: foo-server
+       subset: foo-v1
     label：
-      app: baidu
+      app: foo
       version: v1
   match:
   - args:
@@ -195,10 +195,10 @@ http:
 -------------------
 
 kind: destinations
-name: baidu-dest
-host: baidu-server
+name: foo-dest
+host: foo-server
 subsets:
-- name: baidu-v1
+- name: foo-v1
   ips：
   - 127.0.0.1
 
@@ -207,13 +207,13 @@ subsets:
 kind：Plugin
 selector：
   labels：
-     app: baidu
+     app: foo
 sort:
 - name: proxy-rewrite
   conf:
     uri: "/test/home.html"
     scheme: "http"
-    host: "baidu.com"
+    host: "foo.com"
     headers:
       X-Api-Version: "v1"
       X-Api-Engine: "apisix"

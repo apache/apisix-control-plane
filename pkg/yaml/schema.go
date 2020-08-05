@@ -7,7 +7,8 @@ import (
 
 // YamlSchema define schema rule
 func YamlSchema() string {
-	return `{
+	return `
+{
 	"type": "object",
 	"properties": {
 		"kind": {
@@ -42,10 +43,120 @@ func YamlSchema() string {
 					}
 				}
 			}
+		},
+		"hosts": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"gateways": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"http": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"route": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"destination": {
+									"type": "object",
+									"properties": {
+										"port": {
+											"type": "number"
+										},
+										"host": {
+											"type": "string"
+										},
+										"subset": {
+											"type": "string"
+										},
+										"weight": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					},
+					"label": {
+						"type": "object"
+					},
+					"match": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"headers": {
+									"type": "object"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"host": {
+			"type": "string"
+		},
+		"subsets": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"ips": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"selector": {
+						"type": "object",
+						"properties": {
+							"labels": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"selector": {
+			"type": "object",
+			"properties": {
+				"labels": {
+					"type": "object"
+				}
+			}
+		},
+		"sort": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"conf": {
+						"type": "object"
+					}
+				}
+			}
 		}
 	},
 	"additionalProperties": true
-}`
+}
+`
 }
 
 func Validate(request string) (bool, error) {

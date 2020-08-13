@@ -19,7 +19,6 @@ package yml
 
 type YmlModel interface {
 	ToMem() string
-	Type() string
 }
 
 type Gateway struct {
@@ -43,6 +42,35 @@ func (g *Gateway) ToMem() string {
 	return "gateway"
 }
 
-func (g *Gateway) Type() string {
-	return "Gateway"
+type Rule struct {
+	Kind     string   `json:"kind"`
+	Name     string   `json:"name"`
+	Hosts    []string `json:"hosts"`
+	Gateways []string `json:"gateways"`
+	HTTP     []HTTP   `json:"http"`
+}
+type Destination struct {
+	Port   int64  `json:"port"`
+	Host   string `json:"host"`
+	Subset string `json:"subset"`
+	Weight int64  `json:"weight"`
+}
+type Route struct {
+	Destination Destination `json:"destination"`
+}
+type Label map[string]string
+
+type Headers map[string]interface{}
+
+type Match struct {
+	Headers Headers `json:"headers"`
+}
+type HTTP struct {
+	Route []Route `json:"route"`
+	Label Label   `json:"label"`
+	Match []Match `json:"match,omitempty"`
+}
+
+func (r *Rule) ToMem() string {
+	return "Rule"
 }

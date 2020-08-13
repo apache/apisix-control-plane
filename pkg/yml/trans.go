@@ -38,8 +38,15 @@ func Trans(b []byte, y []byte) YmlModel {
 				fmt.Println("trans to Gateway error ", err)
 				return nil
 			} else {
-				fmt.Println(g)
 				return g
+			}
+		case "Rule":
+			// trans to Rule
+			if r, err := ToRule(y); err != nil {
+				fmt.Println("trans to Rule error ", err)
+				return nil
+			} else {
+				return r
 			}
 		default:
 			fmt.Println("nil")
@@ -55,5 +62,15 @@ func ToGateway(y []byte) (*Gateway, error) {
 		return nil, err
 	} else {
 		return g, nil
+	}
+}
+
+func ToRule(y []byte) (*Rule, error) {
+	var r *Rule
+	if err := yaml.Unmarshal(y, &r); err != nil {
+		fmt.Println(err)
+		return nil, err
+	} else {
+		return r, nil
 	}
 }

@@ -23,8 +23,8 @@ type YmlModel interface {
 }
 
 type Gateway struct {
-	ID      *string  `json:"id,omitempty"`
-	Name    *string  `json:"name,omitempty"`
+	Kind    *string  `json:"kind"`
+	Name    *string  `json:"name"`
 	Servers []Server `json:"servers"`
 }
 

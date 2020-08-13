@@ -14,16 +14,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package yaml_test
+
+package yml
 
 import (
-	"testing"
-
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
+	"encoding/json"
+	"fmt"
+	"gopkg.in/yaml.v2"
 )
 
-func TestYaml(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "Yaml Suite")
+func Trans(b []byte, y []byte) YmlModel {
+	// 1.trans with kind
+	var yMap map[string]interface{}
+	if err := json.Unmarshal(b, &yMap); err != nil {
+		fmt.Println("trans to map error")
+		return nil
+	} else {
+		kind := yMap["kind"]
+		switch kind {
+		case "Gateway":
+			// trans to Gateway
+			if g, err := ToGateway(y); err != nil {
+				fmt.Println("trans to Gateway error ", err)
+				return nil
+			} else {
+				fmt.Println(g)
+				return g
+			}
+		default:
+			fmt.Println("nil")
+			return nil
+		}
+	}
+}
+
+func ToGateway(y []byte) (*Gateway, error) {
+	var g *Gateway
+	if err := yaml.Unmarshal(y, &g); err != nil {
+		fmt.Println(err)
+		return nil, err
+	} else {
+		return g, nil
+	}
 }

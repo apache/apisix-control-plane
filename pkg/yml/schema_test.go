@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package yaml_test
+package yml_test
 
 import (
 	"fmt"
-	localYaml "github.com/apache/apisix-control-plane/pkg/yaml"
+	localYaml "github.com/apache/apisix-control-plane/pkg/yml"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -42,7 +42,7 @@ servers:
 			fmt.Println(okGateway)
 		})
 		Context("Gateway schema check ok", func() {
-			It("Gateway yaml is ok", func() {
+			It("Gateway yml is ok", func() {
 				fmt.Println(okGateway)
 				fmt.Println(2)
 				if b, err := localYaml.ToJson(okGateway); err != nil {
@@ -95,7 +95,7 @@ http:
 			fmt.Println(okRule)
 		})
 		Context("Rule schema check ok", func() {
-			It("Rule yaml is ok", func() {
+			It("Rule yml is ok", func() {
 				fmt.Println(okRule)
 				if b, err := localYaml.ToJson(okRule); err != nil {
 					fmt.Println(err.Error())
@@ -131,7 +131,7 @@ subsets:
 			fmt.Println(okTarget)
 		})
 		Context("Destination schema check ok", func() {
-			It("Destination yaml is ok", func() {
+			It("Destination yml is ok", func() {
 				fmt.Println(okTarget)
 				if b, err := localYaml.ToJson(okTarget); err != nil {
 					fmt.Println(err.Error())
@@ -173,7 +173,7 @@ sort:
 			fmt.Println(okPlugin)
 		})
 		Context("Plugin schema check ok", func() {
-			It("Plugin yaml is ok", func() {
+			It("Plugin yml is ok", func() {
 				fmt.Println(okPlugin)
 				if b, err := localYaml.ToJson(okPlugin); err != nil {
 					fmt.Println(err.Error())

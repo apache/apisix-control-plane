@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package yaml_test
+package yml_test
 
 import (
 	"fmt"
@@ -25,14 +25,14 @@ import (
 )
 
 var _ = Describe("Yaml", func() {
-	Describe("yaml & json", func() {
+	Describe("yml & json", func() {
 		var b []byte
 		BeforeEach(func() {
 			b = []byte(`{"name": "John", "age": 30}`)
 			fmt.Println("BeforeEach executed")
 		})
-		Context("json to yaml", func() {
-			It("json to yaml no error", func() {
+		Context("json to yml", func() {
+			It("json to yml no error", func() {
 				fmt.Println(string(b))
 				y, err := yaml.JSONToYAML(b)
 				fmt.Println(string(y))
@@ -40,9 +40,9 @@ var _ = Describe("Yaml", func() {
 			})
 		})
 
-		Context("yaml to json", func() {
+		Context("yml to json", func() {
 
-			It("yaml to json no error", func() {
+			It("yml to json no error", func() {
 				fmt.Println(5)
 				y, _ := yaml.JSONToYAML(b)
 				y2, err := yaml.YAMLToJSON(y)

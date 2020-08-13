@@ -40,6 +40,14 @@ func Trans(b []byte, y []byte) YmlModel {
 			} else {
 				return g
 			}
+		case "Destination":
+			// trans to Destination
+			if g, err := ToDestination(y); err != nil {
+				fmt.Println("trans to destination error ", err)
+				return nil
+			} else {
+				return g
+			}
 		case "Rule":
 			// trans to Rule
 			if r, err := ToRule(y); err != nil {
@@ -72,5 +80,15 @@ func ToRule(y []byte) (*Rule, error) {
 		return nil, err
 	} else {
 		return r, nil
+	}
+}
+
+func ToDestination(y []byte) (*Destination, error) {
+	var g *Destination
+	if err := yaml.Unmarshal(y, &g); err != nil {
+		fmt.Println(err)
+		return nil, err
+	} else {
+		return g, nil
 	}
 }

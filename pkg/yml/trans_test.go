@@ -46,7 +46,6 @@ servers:
 				ym := yml.Trans(y, b)
 				Expect(err).NotTo(HaveOccurred())
 				v := typeof(ym)
-				fmt.Println(v)
 				Expect(v).To(Equal("*yml.Gateway"))
 				g, ok := ym.(*yml.Gateway)
 				Expect(ok).To(Equal(true))
@@ -84,17 +83,43 @@ http:
     app: foo
     version: v2
 `)
+
 				y, err := yaml.YAMLToJSON(b)
 				fmt.Println(string(y))
 				ym := yml.Trans(y, b)
 				Expect(err).NotTo(HaveOccurred())
 				v := typeof(ym)
-				fmt.Println(v)
 				Expect(v).To(Equal("*yml.Rule"))
 				r, ok := ym.(*yml.Rule)
 				Expect(ok).To(Equal(true))
 				Expect(r.Kind).To(Equal("Rule"))
 				Expect(r.Kind).To(Equal("Rule"))
+			})
+
+			It("trans to destination no error", func() {
+				b := []byte(`
+kind: Destination
+name: foo-dest
+host: foo-server
+subsets:
+- name: foo-v1
+  ips:
+  - 127.0.0.1
+  - 127.0.0.2
+- name: v2
+  selector:
+    tag: v2
+`)
+				y, err := yaml.YAMLToJSON(b)
+				fmt.Println(string(y))
+				ym := yml.Trans(y, b)
+				Expect(err).NotTo(HaveOccurred())
+				v := typeof(ym)
+				Expect(v).To(Equal("*yml.Destination"))
+				g, ok := ym.(*yml.Destination)
+				Expect(ok).To(Equal(true))
+				Expect(g.Kind).To(Equal("Destination"))
+				Expect(g.Host).To(Equal("foo-server"))
 			})
 		})
 	})

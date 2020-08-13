@@ -49,14 +49,14 @@ type Rule struct {
 	Gateways []string `json:"gateways"`
 	HTTP     []HTTP   `json:"http"`
 }
-type Destination struct {
+type RouteDestination struct {
 	Port   int64  `json:"port"`
 	Host   string `json:"host"`
 	Subset string `json:"subset"`
 	Weight int64  `json:"weight"`
 }
 type Route struct {
-	Destination Destination `json:"destination"`
+	Destination RouteDestination `json:"destination"`
 }
 type Label map[string]string
 
@@ -73,4 +73,21 @@ type HTTP struct {
 
 func (r *Rule) ToMem() string {
 	return "Rule"
+}
+
+type Destination struct {
+	Kind    string   `json:"kind"`
+	Name    string   `json:"name"`
+	Host    string   `json:"host"`
+	Subsets []Subset `json:"subsets"`
+}
+
+type Subset struct {
+	Name     string            `json:"name"`
+	Ips      []string          `json:"ips,omitempty"`
+	Selector map[string]string `json:"selector,omitempty"`
+}
+
+func (g *Destination) ToMem() string {
+	return "destination"
 }

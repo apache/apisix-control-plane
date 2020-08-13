@@ -96,18 +96,17 @@ http:
 ### Define the target service
 
 ```yaml
-kind: destinations
+kind: Destination
 name: foo-dest
 host: foo-server
 subsets:
 - name: foo-v1
-  ips：
+  ips:
   - 127.0.0.1
   - 127.0.0.2
 - name: v2
   selector:
-    labels:
-      tag: v2
+  	tag: v2
 
 ```
 

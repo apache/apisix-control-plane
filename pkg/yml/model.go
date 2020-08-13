@@ -91,3 +91,18 @@ type Subset struct {
 func (g *Destination) ToMem() string {
 	return "destination"
 }
+
+type Plugin struct {
+	Kind     string            `yaml:"kind"`
+	Selector map[string]string `yaml:"selector"`
+	Sets     []Set             `yaml:"sets"`
+}
+
+type Set struct {
+	Name string                 `yaml:"name"`
+	Conf map[string]interface{} `yaml:"conf,omitempty"`
+}
+
+func (g *Plugin) ToMem() string {
+	return "plugin"
+}

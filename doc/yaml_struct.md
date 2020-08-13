@@ -121,18 +121,20 @@ subsets:
 The logic of the plugin itself is not defined here, only known plugins will be referenced here
 
 ```yaml
-kind：Plugin
-selector：
-  labels：
-     app: foo
-sort:
-- name: limit-count
+kind: Plugin
+selector:
+  app: foo
+sets:
+- name: proxy-rewrite
   conf:
-      max：100
+    uri: "/test/home.html"
+    scheme: "http"
+    host: "foo.com"
+    headers:
+      X-Api-Version: "v1"
+      X-Api-Engine: "apisix"
+      X-Api-useless: ""
 - name: prometheus
-  conf:
-     ...schema..
-
 ```
 
 ### A complete demo
@@ -236,7 +238,7 @@ kind：Plugin
 selector：
   labels：
      app: foo
-sort:
+sets:
 - name: proxy-rewrite
   conf:
     uri: "/test/home.html"

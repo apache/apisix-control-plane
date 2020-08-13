@@ -56,6 +56,14 @@ func Trans(b []byte, y []byte) YmlModel {
 			} else {
 				return r
 			}
+		case "Plugin":
+			// trans to Plugin
+			if r, err := ToPlugin(y); err != nil {
+				fmt.Println("trans to Plugin error ", err)
+				return nil
+			} else {
+				return r
+			}
 		default:
 			fmt.Println("nil")
 			return nil
@@ -85,6 +93,16 @@ func ToRule(y []byte) (*Rule, error) {
 
 func ToDestination(y []byte) (*Destination, error) {
 	var g *Destination
+	if err := yaml.Unmarshal(y, &g); err != nil {
+		fmt.Println(err)
+		return nil, err
+	} else {
+		return g, nil
+	}
+}
+
+func ToPlugin(y []byte) (*Plugin, error) {
+	var g *Plugin
 	if err := yaml.Unmarshal(y, &g); err != nil {
 		fmt.Println(err)
 		return nil, err

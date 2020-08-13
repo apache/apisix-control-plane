@@ -121,6 +121,37 @@ subsets:
 				Expect(g.Kind).To(Equal("Destination"))
 				Expect(g.Host).To(Equal("foo-server"))
 			})
+
+			It("trans to plugin no error", func() {
+				b := []byte(`
+kind: Plugin
+selector:
+  app: foo
+sets:
+- name: proxy-rewrite
+  conf:
+    uri: "/test/home.html"
+    scheme: "http"
+    host: "foo.com"
+    headers:
+      X-Api-Version: "v1"
+      X-Api-Engine: "apisix"
+      X-Api-useless: ""
+- name: prometheus
+`)
+				y, err := yaml.YAMLToJSON(b)
+				fmt.Println(string(y))
+				ym := yml.Trans(y, b)
+				Expect(err).NotTo(HaveOccurred())
+				v := typeof(ym)
+				Expect(v).To(Equal("*yml.Plugin"))
+				g, ok := ym.(*yml.Plugin)
+				Expect(ok).To(Equal(true))
+				Expect(g.Kind).To(Equal("Plugin"))
+				fmt.Println(g.Sets)
+				Expect(len(g.Sets)).To(Equal(2))
+				Expect(g.Selector["app"]).To(Equal("foo"))
+			})
 		})
 	})
 })

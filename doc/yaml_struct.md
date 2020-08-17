@@ -220,8 +220,9 @@ http:
        exact: "json"
      age:
        Greater: 18
-  - uri:
-      prefix: "/"
+  - uris:
+    - prefix: "/"
+
 -------------------
 
 kind: destinations

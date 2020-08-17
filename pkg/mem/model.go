@@ -17,24 +17,29 @@
 
 package mem
 
+type MemModel interface {
+	Diff(m MemModel) bool
+}
+
 type Route struct {
-	ID              *string   `json:"id,omitempty" yml:"id,omitempty"`
-	Group           *string   `json:"group,omitempty" yml:"group,omitempty"`
-	FullName        *string   `json:"full_name,omitempty" yml:"full_name,omitempty"`
-	ResourceVersion *string   `json:"resource_version,omitempty" yml:"resource_version,omitempty"`
-	Host            *string   `json:"host,omitempty" yml:"host,omitempty"`
-	Path            *string   `json:"path,omitempty" yml:"path,omitempty"`
-	Name            *string   `json:"name,omitempty" yml:"name,omitempty"`
-	Methods         []*string `json:"methods,omitempty" yml:"methods,omitempty"`
-	ServiceId       *string   `json:"service_id,omitempty" yml:"service_id,omitempty"`
-	ServiceName     *string   `json:"service_name,omitempty" yml:"service_name,omitempty"`
-	UpstreamId      *string   `json:"upstream_id,omitempty" yml:"upstream_id,omitempty"`
-	UpstreamName    *string   `json:"upstream_name,omitempty" yml:"upstream_name,omitempty"`
-	Plugins         []*Plugin `json:"plugins,omitempty" yml:"plugins,omitempty"`
+	ID           *string                  `json:"id,omitempty" yml:"id,omitempty"`
+	Kind         *string                  `json:"kind"`
+	FullName     *string                  `json:"full_name,omitempty" yml:"full_name,omitempty"`
+	Hosts        []*string                `json:"hosts,omitempty" yml:"hosts,omitempty"`
+	Match        []map[string]interface{} `json:"paths,omitempty" yml:"paths,omitempty"`
+	Name         *string                  `json:"name,omitempty" yml:"name,omitempty"`
+	Methods      []*string                `json:"methods,omitempty" yml:"methods,omitempty"`
+	ServiceId    *string                  `json:"service_id,omitempty" yml:"service_id,omitempty"`
+	ServiceName  *string                  `json:"service_name,omitempty" yml:"service_name,omitempty"`
+	UpstreamId   *string                  `json:"upstream_id,omitempty" yml:"upstream_id,omitempty"`
+	UpstreamName *string                  `json:"upstream_name,omitempty" yml:"upstream_name,omitempty"`
+	Plugins      []*Plugin                `json:"plugins,omitempty" yml:"plugins,omitempty"`
 }
 
 type Upstream struct {
 	ID              *string `json:"id,omitempty" yml:"id,omitempty"`
+	Kind            *string `json:"kind"`
+	Host            *string `json:"host"`
 	FullName        *string `json:"full_name,omitempty" yml:"full_name,omitempty"`
 	Group           *string `json:"group,omitempty" yml:"group,omitempty"`
 	ResourceVersion *string `json:"resource_version,omitempty" yml:"resource_version,omitempty"`
@@ -43,6 +48,7 @@ type Upstream struct {
 	HashOn          *string `json:"hash_on,omitemtpy" yml:"hash_on,omitempty"`
 	Key             *string `json:"key,omitempty" yml:"key,omitempty"`
 	Nodes           []*Node `json:"nodes,omitempty" yml:"nodes,omitempty"`
+	Weight          int64   `json:"weight"`
 	FromKind        *string `json:"from_kind,omitempty" yml:"from_kind,omitempty"`
 }
 
@@ -53,14 +59,32 @@ type Node struct {
 }
 
 type Plugin struct {
-	ID       *string        `json:"id,omitempty"`
-	Selector Selector       `json:"selector"`
-	Sort     []PluginSchema `json:"sort"`
+	ID       *string           `json:"id,omitempty"`
+	Kind     *string           `json:"kind"`
+	Selector map[string]string `json:"selector"`
+	Sets     []*PluginSet      `json:"sets"`
 }
 
-type Selector map[string]string
+type PluginSet struct {
+	Name *string                `json:"name"`
+	Conf map[string]interface{} `json:"conf"`
+}
 
-type PluginSchema struct {
-	Name string      `json:"name"`
-	Conf interface{} `json:"conf"`
+type Gateway struct {
+	ID       *string   `json:"id,omitempty"`
+	FullName *string   `json:"full_name,omitempty" yml:"full_name,omitempty"`
+	Kind     *string   `json:"kind"`
+	Name     *string   `json:"name"`
+	Servers  []*Server `json:"servers"`
+}
+
+type Server struct {
+	Port  *Port    `json:"port,omitempty"`
+	Hosts []string `json:"host,omitempty"`
+}
+
+type Port struct {
+	Number   int    `json:"number"`
+	Name     string `json:"name"`
+	Protocol string `json:"protocol"`
 }

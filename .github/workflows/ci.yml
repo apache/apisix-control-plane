@@ -25,4 +25,4 @@ jobs:
     - name: run test
       working-directory: ./
       run: |
-        ginkgo -r
+        go test ./...

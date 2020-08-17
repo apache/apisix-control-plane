@@ -92,8 +92,7 @@ http:
 				Expect(v).To(Equal("*yml.Rule"))
 				r, ok := ym.(*yml.Rule)
 				Expect(ok).To(Equal(true))
-				Expect(r.Kind).To(Equal("Rule"))
-				Expect(r.Kind).To(Equal("Rule"))
+				Expect(*r.Kind).To(Equal("Rule"))
 			})
 
 			It("trans to destination no error", func() {
@@ -118,8 +117,8 @@ subsets:
 				Expect(v).To(Equal("*yml.Destination"))
 				g, ok := ym.(*yml.Destination)
 				Expect(ok).To(Equal(true))
-				Expect(g.Kind).To(Equal("Destination"))
-				Expect(g.Host).To(Equal("foo-server"))
+				Expect(*g.Kind).To(Equal("Destination"))
+				Expect(*g.Host).To(Equal("foo-server"))
 			})
 
 			It("trans to plugin no error", func() {
@@ -147,7 +146,7 @@ sets:
 				Expect(v).To(Equal("*yml.Plugin"))
 				g, ok := ym.(*yml.Plugin)
 				Expect(ok).To(Equal(true))
-				Expect(g.Kind).To(Equal("Plugin"))
+				Expect(*g.Kind).To(Equal("Plugin"))
 				fmt.Println(g.Sets)
 				Expect(len(g.Sets)).To(Equal(2))
 				Expect(g.Selector["app"]).To(Equal("foo"))

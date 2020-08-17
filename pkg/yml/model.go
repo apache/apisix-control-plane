@@ -17,14 +17,18 @@
 
 package yml
 
+import "github.com/apache/apisix-control-plane/pkg/mem"
+
+const seprator = ":"
+
 type YmlModel interface {
-	ToMem() string
+	ToMem() []mem.MemModel
 }
 
 type Gateway struct {
-	Kind    *string  `json:"kind"`
-	Name    *string  `json:"name"`
-	Servers []Server `json:"servers"`
+	Kind    *string   `json:"kind"`
+	Name    *string   `json:"name"`
+	Servers []*Server `json:"servers"`
 }
 
 type Server struct {
@@ -38,16 +42,12 @@ type Port struct {
 	Protocol string `json:"protocol"`
 }
 
-func (g *Gateway) ToMem() string {
-	return "gateway"
-}
-
 type Rule struct {
-	Kind     string   `json:"kind"`
-	Name     string   `json:"name"`
-	Hosts    []string `json:"hosts"`
-	Gateways []string `json:"gateways"`
-	HTTP     []HTTP   `json:"http"`
+	Kind     *string   `json:"kind"`
+	Name     *string   `json:"name"`
+	Hosts    []*string `json:"hosts"`
+	Gateways []*string `json:"gateways"`
+	HTTP     []*HTTP   `json:"http"`
 }
 type RouteDestination struct {
 	Port   int64  `json:"port"`
@@ -64,45 +64,42 @@ type Headers map[string]interface{}
 
 type Match struct {
 	Headers Headers `json:"headers"`
-}
-type HTTP struct {
-	Route []Route `json:"route"`
-	Label Label   `json:"label"`
-	Match []Match `json:"match,omitempty"`
+	Uris    []*Uri  `json:"uris"`
 }
 
-func (r *Rule) ToMem() string {
-	return "Rule"
+type Uri struct {
+	Prefix  *string `json:"prefix,omitempty"`
+	Exact   *string `json:"exact,omitempty"`
+	Regular *string `json:"regular,omitempty"`
+}
+
+type HTTP struct {
+	Route []*Route                 `json:"route"`
+	Label *Label                   `json:"label"`
+	Match []map[string]interface{} `json:"match,omitempty"`
 }
 
 type Destination struct {
-	Kind    string   `json:"kind"`
-	Name    string   `json:"name"`
-	Host    string   `json:"host"`
-	Subsets []Subset `json:"subsets"`
+	Kind    *string   `json:"kind"`
+	Name    *string   `json:"name"`
+	Host    *string   `json:"host"`
+	Subsets []*Subset `json:"subsets"`
 }
 
 type Subset struct {
-	Name     string            `json:"name"`
-	Ips      []string          `json:"ips,omitempty"`
+	Name     *string           `json:"name"`
+	Ips      []*string         `json:"ips,omitempty"`
 	Selector map[string]string `json:"selector,omitempty"`
-}
-
-func (g *Destination) ToMem() string {
-	return "destination"
+	Weight   int64             `json:"weight"`
 }
 
 type Plugin struct {
-	Kind     string            `yaml:"kind"`
+	Kind     *string           `yaml:"kind"`
 	Selector map[string]string `yaml:"selector"`
-	Sets     []Set             `yaml:"sets"`
+	Sets     []*PluginSet      `yaml:"sets"`
 }
 
-type Set struct {
-	Name string                 `yaml:"name"`
+type PluginSet struct {
+	Name *string                `yaml:"name"`
 	Conf map[string]interface{} `yaml:"conf,omitempty"`
-}
-
-func (g *Plugin) ToMem() string {
-	return "plugin"
 }

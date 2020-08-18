@@ -219,7 +219,7 @@ http:
      name:
        exact: "json"
      age:
-       Greater: 18
+       greater: 18
   - uris:
     - prefix: "/"
 

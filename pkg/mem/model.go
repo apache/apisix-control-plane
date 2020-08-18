@@ -61,6 +61,8 @@ type Node struct {
 type Plugin struct {
 	ID       *string           `json:"id,omitempty"`
 	Kind     *string           `json:"kind"`
+	Name     *string           `json:"name"`
+	FullName *string           `json:"full_name"`
 	Selector map[string]string `json:"selector"`
 	Sets     []*PluginSet      `json:"sets"`
 }
@@ -80,7 +82,7 @@ type Gateway struct {
 
 type Server struct {
 	Port  *Port    `json:"port,omitempty"`
-	Hosts []string `json:"host,omitempty"`
+	Hosts []string `json:"hosts,omitempty"`
 }
 
 type Port struct {

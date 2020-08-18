@@ -17,39 +17,45 @@
 
 package mem
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/yudai/gojsondiff"
+)
 
-type PluginDB struct {
-	Plugins []*Plugin
-}
+var (
+	differ = gojsondiff.New()
+)
 
-// insert Plugin to memDB
-func (db *PluginDB) Insert() error {
-	txn := DB.Txn(true)
-	defer txn.Abort()
-	for _, r := range db.Plugins {
-		if err := txn.Insert(PluginTable, r); err != nil {
-			return err
-		}
+func HasDiff(a, b interface{}) (bool, error) {
+	aJSON, err := json.Marshal(a)
+	if err != nil {
+		return false, err
 	}
-	txn.Commit()
-	return nil
+	bJSON, err := json.Marshal(b)
+	if err != nil {
+		return false, err
+	}
+	if d, err := differ.Compare(aJSON, bJSON); err != nil {
+		return false, err
+	} else {
+		fmt.Println(d.Deltas())
+		return d.Modified(), nil
+	}
 }
 
-func (g *Plugin) FindByFullName() (*Plugin, error) {
-	txn := DB.Txn(false)
-	defer txn.Abort()
-	if raw, err := txn.First(PluginTable, "id", *g.FullName); err != nil {
+func Diff(a, b interface{}) (gojsondiff.Diff, error) {
+	aJSON, err := json.Marshal(a)
+	if err != nil {
+		return nil, err
+	}
+	bJSON, err := json.Marshal(b)
+	if err != nil {
+		return nil, err
+	}
+	if d, err := differ.Compare(aJSON, bJSON); err != nil {
 		return nil, err
 	} else {
-		if raw != nil {
-			current := raw.(*Plugin)
-			return current, nil
-		}
-		return nil, fmt.Errorf("NOT FOUND")
+		return d, nil
 	}
-}
-
-func (g *Plugin) Diff(t MemModel) bool {
-	return true
 }

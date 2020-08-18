@@ -17,7 +17,9 @@
 
 package mem
 
-import "github.com/hashicorp/go-memdb"
+import (
+	"github.com/hashicorp/go-memdb"
+)
 
 var DB *memdb.MemDB
 

@@ -15,41 +15,16 @@
  * limitations under the License.
  */
 
-package mem
+package mem_test
 
-import "fmt"
+import (
+	"testing"
 
-type PluginDB struct {
-	Plugins []*Plugin
-}
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
-// insert Plugin to memDB
-func (db *PluginDB) Insert() error {
-	txn := DB.Txn(true)
-	defer txn.Abort()
-	for _, r := range db.Plugins {
-		if err := txn.Insert(PluginTable, r); err != nil {
-			return err
-		}
-	}
-	txn.Commit()
-	return nil
-}
-
-func (g *Plugin) FindByFullName() (*Plugin, error) {
-	txn := DB.Txn(false)
-	defer txn.Abort()
-	if raw, err := txn.First(PluginTable, "id", *g.FullName); err != nil {
-		return nil, err
-	} else {
-		if raw != nil {
-			current := raw.(*Plugin)
-			return current, nil
-		}
-		return nil, fmt.Errorf("NOT FOUND")
-	}
-}
-
-func (g *Plugin) Diff(t MemModel) bool {
-	return true
+func TestMem(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Mem Suite")
 }

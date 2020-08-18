@@ -17,6 +17,8 @@
 
 package mem
 
+import "fmt"
+
 type RouteDB struct {
 	Routes []*Route
 }
@@ -32,6 +34,20 @@ func (db *RouteDB) Insert() error {
 	}
 	txn.Commit()
 	return nil
+}
+
+func (g *Route) FindByFullName() (*Route, error) {
+	txn := DB.Txn(false)
+	defer txn.Abort()
+	if raw, err := txn.First(RouteTable, "id", *g.FullName); err != nil {
+		return nil, err
+	} else {
+		if raw != nil {
+			current := raw.(*Route)
+			return current, nil
+		}
+		return nil, fmt.Errorf("NOT FOUND")
+	}
 }
 
 func (g *Route) Diff(t MemModel) bool {

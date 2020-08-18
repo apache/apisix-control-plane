@@ -17,12 +17,17 @@
 
 package mem
 
+import (
+	"fmt"
+)
+
 type GatewayDB struct {
 	Gateways []*Gateway
 }
 
 // insert Gateway to memDB
 func (db *GatewayDB) Insert() error {
+	fmt.Println(DB)
 	txn := DB.Txn(true)
 	defer txn.Abort()
 	for _, r := range db.Gateways {
@@ -32,6 +37,20 @@ func (db *GatewayDB) Insert() error {
 	}
 	txn.Commit()
 	return nil
+}
+
+func (g *Gateway) FindByFullName() (*Gateway, error) {
+	txn := DB.Txn(false)
+	defer txn.Abort()
+	if raw, err := txn.First(GatewayTable, "id", *g.FullName); err != nil {
+		return nil, err
+	} else {
+		if raw != nil {
+			currentGateway := raw.(*Gateway)
+			return currentGateway, nil
+		}
+		return nil, fmt.Errorf("NOT FOUND")
+	}
 }
 
 func (g *Gateway) Diff(t MemModel) bool {

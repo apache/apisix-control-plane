@@ -17,6 +17,8 @@
 
 package mem
 
+import "fmt"
+
 type UpstreamDB struct {
 	Upstreams []*Upstream
 }
@@ -32,6 +34,20 @@ func (db *UpstreamDB) Insert() error {
 	}
 	txn.Commit()
 	return nil
+}
+
+func (g *Upstream) FindByFullName() (*Upstream, error) {
+	txn := DB.Txn(false)
+	defer txn.Abort()
+	if raw, err := txn.First(UpstreamTable, "id", *g.FullName); err != nil {
+		return nil, err
+	} else {
+		if raw != nil {
+			current := raw.(*Upstream)
+			return current, nil
+		}
+		return nil, fmt.Errorf("NOT FOUND")
+	}
 }
 
 func (g *Upstream) Diff(t MemModel) bool {

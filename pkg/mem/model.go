@@ -17,6 +17,11 @@
 
 package mem
 
+const GatewayKind = "Gateway"
+const RouteKind = "Route"
+const UpstreamKind = "Upstream"
+const PluginKind = "Plugin"
+
 type MemModel interface {
 	Diff(m MemModel) bool
 }

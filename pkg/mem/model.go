@@ -45,7 +45,7 @@ type Upstream struct {
 	ResourceVersion *string `json:"resource_version,omitempty" yml:"resource_version,omitempty"`
 	Name            *string `json:"name,omitempty" yml:"name,omitempty"`
 	Type            *string `json:"type,omitempty" yml:"type,omitempty"`
-	HashOn          *string `json:"hash_on,omitemtpy" yml:"hash_on,omitempty"`
+	HashOn          *string `json:"hash_on,omitempty" yml:"hash_on,omitempty"`
 	Key             *string `json:"key,omitempty" yml:"key,omitempty"`
 	Nodes           []*Node `json:"nodes,omitempty" yml:"nodes,omitempty"`
 	Weight          int64   `json:"weight"`

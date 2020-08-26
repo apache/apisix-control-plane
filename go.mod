@@ -11,5 +11,6 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	github.com/yudai/gojsondiff v1.0.0
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
+	go.uber.org/zap v1.15.0
 	gopkg.in/yaml.v2 v2.3.0
 )

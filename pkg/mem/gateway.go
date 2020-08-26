@@ -27,7 +27,6 @@ type GatewayDB struct {
 
 // insert Gateway to memDB
 func (db *GatewayDB) Insert() error {
-	fmt.Println(DB)
 	txn := DB.Txn(true)
 	defer txn.Abort()
 	for _, r := range db.Gateways {

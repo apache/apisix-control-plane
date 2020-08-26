@@ -19,8 +19,10 @@ package mem
 
 import (
 	"encoding/json"
-	"fmt"
+
 	"github.com/yudai/gojsondiff"
+
+	"github.com/apache/apisix-control-plane/pkg/log"
 )
 
 var (
@@ -39,7 +41,7 @@ func HasDiff(a, b interface{}) (bool, error) {
 	if d, err := differ.Compare(aJSON, bJSON); err != nil {
 		return false, err
 	} else {
-		fmt.Println(d.Deltas())
+		log.Debugw("diff result", "deltas", d.Deltas())
 		return d.Modified(), nil
 	}
 }

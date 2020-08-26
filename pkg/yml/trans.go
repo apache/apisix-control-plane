@@ -19,15 +19,17 @@ package yml
 
 import (
 	"encoding/json"
-	"fmt"
+
 	"gopkg.in/yaml.v2"
+
+	"github.com/apache/apisix-control-plane/pkg/log"
 )
 
 func Trans(b []byte, y []byte) YmlModel {
 	// 1.trans with kind
 	var yMap map[string]interface{}
 	if err := json.Unmarshal(b, &yMap); err != nil {
-		fmt.Println("trans to map error")
+		log.Errorw("unmarshal json failed", "err", err, "raw", string(b))
 		return nil
 	} else {
 		kind := yMap["kind"]
@@ -35,7 +37,6 @@ func Trans(b []byte, y []byte) YmlModel {
 		case "Gateway":
 			// trans to Gateway
 			if g, err := ToGateway(y); err != nil {
-				fmt.Println("trans to Gateway error ", err)
 				return nil
 			} else {
 				return g
@@ -43,7 +44,6 @@ func Trans(b []byte, y []byte) YmlModel {
 		case "Destination":
 			// trans to Destination
 			if g, err := ToDestination(y); err != nil {
-				fmt.Println("trans to destination error ", err)
 				return nil
 			} else {
 				return g
@@ -51,7 +51,6 @@ func Trans(b []byte, y []byte) YmlModel {
 		case "Rule":
 			// trans to Rule
 			if r, err := ToRule(y); err != nil {
-				fmt.Println("trans to Rule error ", err)
 				return nil
 			} else {
 				return r
@@ -59,13 +58,12 @@ func Trans(b []byte, y []byte) YmlModel {
 		case "Plugin":
 			// trans to Plugin
 			if r, err := ToPlugin(y); err != nil {
-				fmt.Println("trans to Plugin error ", err)
 				return nil
 			} else {
 				return r
 			}
 		default:
-			fmt.Println("nil")
+			log.Warnw("unknown kind", "kind", kind)
 			return nil
 		}
 	}
@@ -74,7 +72,7 @@ func Trans(b []byte, y []byte) YmlModel {
 func ToGateway(y []byte) (*Gateway, error) {
 	var g *Gateway
 	if err := yaml.Unmarshal(y, &g); err != nil {
-		fmt.Println(err)
+		log.Errorw("unmarshal yaml failed", "err", err, "raw", string(y))
 		return nil, err
 	} else {
 		return g, nil
@@ -84,7 +82,7 @@ func ToGateway(y []byte) (*Gateway, error) {
 func ToRule(y []byte) (*Rule, error) {
 	var r *Rule
 	if err := yaml.Unmarshal(y, &r); err != nil {
-		fmt.Println(err)
+		log.Errorw("unmarshal yaml failed", "err", err, "raw", string(y))
 		return nil, err
 	} else {
 		return r, nil
@@ -94,7 +92,7 @@ func ToRule(y []byte) (*Rule, error) {
 func ToDestination(y []byte) (*Destination, error) {
 	var g *Destination
 	if err := yaml.Unmarshal(y, &g); err != nil {
-		fmt.Println(err)
+		log.Errorw("unmarshal yaml failed", "err", err, "raw", string(y))
 		return nil, err
 	} else {
 		return g, nil
@@ -104,7 +102,7 @@ func ToDestination(y []byte) (*Destination, error) {
 func ToPlugin(y []byte) (*Plugin, error) {
 	var g *Plugin
 	if err := yaml.Unmarshal(y, &g); err != nil {
-		fmt.Println(err)
+		log.Errorw("unmarshal yaml failed", "err", err, "raw", string(y))
 		return nil, err
 	} else {
 		return g, nil

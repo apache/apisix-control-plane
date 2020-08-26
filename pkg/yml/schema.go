@@ -18,7 +18,10 @@ package yml
 
 import (
 	"fmt"
+
 	"github.com/xeipuuv/gojsonschema"
+
+	"github.com/apache/apisix-control-plane/pkg/log"
 )
 
 // YamlSchema define schema rule
@@ -179,13 +182,13 @@ func Validate(request string) (bool, error) {
 	schemaLoader := gojsonschema.NewStringLoader(YamlSchema())
 	schema, err := gojsonschema.NewSchema(schemaLoader)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Errorw("new schema failed", "err", err)
 		return false, err
 	}
 	requestLoader := gojsonschema.NewStringLoader(request)
 	result, err := schema.Validate(requestLoader)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Errorw("validate failed", "err", err)
 		return false, err
 	}
 	if result.Valid() {

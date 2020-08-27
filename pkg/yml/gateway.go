@@ -21,7 +21,7 @@ import "github.com/apache/apisix-control-plane/pkg/mem"
 
 func (g *Gateway) ToMem() []mem.MemModel {
 	result := make([]mem.MemModel, 0)
-	fullName := *g.Kind + seprator + *g.Name
+	fullName := *g.Kind + separator + *g.Name
 	servers := make([]*mem.Server, 0)
 	for _, e := range g.Servers {
 		server := e.ToMem()

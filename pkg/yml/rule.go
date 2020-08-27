@@ -21,7 +21,7 @@ import "github.com/apache/apisix-control-plane/pkg/mem"
 
 func (r *Rule) ToMem() []mem.MemModel {
 	result := make([]mem.MemModel, 0)
-	fullName := *r.Kind + seprator + *r.Name
+	fullName := *r.Kind + separator + *r.Name
 	for _, http := range r.HTTP {
 		route := &mem.Route{
 			Kind:     r.Kind,

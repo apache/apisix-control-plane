@@ -19,7 +19,7 @@ package yml
 
 import "github.com/apache/apisix-control-plane/pkg/mem"
 
-const seprator = ":"
+const separator = ":"
 
 type YmlModel interface {
 	ToMem() []mem.MemModel

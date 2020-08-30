@@ -22,8 +22,8 @@ import "github.com/apache/apisix-control-plane/pkg/mem"
 func (d *Destination) ToMem() []mem.MemModel {
 	result := make([]mem.MemModel, 0)
 	for _, s := range d.Subsets {
-		fullName := *d.Kind + seprator + *d.Name + seprator + *s.Name
-		group := *d.Kind + seprator + *d.Name
+		fullName := *d.Kind + separator + *d.Name + separator + *s.Name
+		group := *d.Kind + separator + *d.Name
 		upstream := &mem.Upstream{
 			Kind:     d.Kind,
 			Name:     d.Name,

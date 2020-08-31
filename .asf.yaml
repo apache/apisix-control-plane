@@ -16,35 +16,36 @@
 #
 
 github:
-    description: The Control-Plane for APISIX
-    homepage: https://apisix.apache.org/
-    labels:
-      - control-plane
-      - cp
-      - cloud-native
-      - api-gateway
-      - go
-      - microservices
-      - api
-      - yaml
-      - api-management
-      - apisix
-      - gitops
-      - devops
-      - kubernetes
-      - docker
-      - cluster
+  description: The Control-Plane for APISIX
+  homepage: https://apisix.apache.org/
+  labels:
+    - control-plane
+    - cp
+    - cloud-native
+    - api-gateway
+    - go
+    - microservices
+    - api
+    - yaml
+    - api-management
+    - apisix
+    - gitops
+    - devops
+    - kubernetes
+    - docker
+    - cluster
 
-    features:
-      issues: true
-      projects: true
+  features:
+    issues: true
+    projects: true
 
-    enabled_merge_buttons:
-      squash:  true
-      merge:   false
-      rebase:  false
+  enabled_merge_buttons:
+    squash:  true
+    merge:   false
+    rebase:  false
 
-#    notifications:
-#      commits:      notifications@apisix.apache.org
-#      issues:       notifications@apisix.apache.org
-#      pullrequests: notifications@apisix.apache.org
+  notifications:
+    pullrequests_status: notifications@apisix.apache.org
+    commits:      notifications@apisix.apache.org
+    issues:       notifications@apisix.apache.org
+    pullrequests: notifications@apisix.apache.org

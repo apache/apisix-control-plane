@@ -40,7 +40,7 @@ type Upstream struct {
 	ResourceVersion *string `json:"resource_version,omitempty"`
 	Name            *string `json:"name,omitempty"`
 	Type            *string `json:"type,omitempty"`
-	HashOn          *string `json:"hash_on,omitemtpy"`
+	HashOn          *string `json:"hash_on,omitempty"`
 	Key             *string `json:"key,omitempty"`
 	Nodes           []*Node `json:"nodes,omitempty"`
 	FromKind        *string `json:"from_kind,omitempty"`

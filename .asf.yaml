@@ -45,7 +45,6 @@ github:
     rebase:  false
 
   notifications:
-    pullrequests_status: notifications@apisix.apache.org
     commits:      notifications@apisix.apache.org
     issues:       notifications@apisix.apache.org
     pullrequests: notifications@apisix.apache.org

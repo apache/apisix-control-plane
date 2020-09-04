@@ -5,6 +5,8 @@ on:
       - master
       - ci/* # a temporary branch to check CI can be named with 'ci/...'
   pull_request:
+    branches:
+      - master
 jobs:
   golangci:
     name: lint

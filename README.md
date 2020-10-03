@@ -21,9 +21,11 @@
 
 ## What is apisix-control-plane
 
-apisix-control-plane is an implementation of providing a control plane for apache apisix. with a `yml` configuration capability, We can use `yml` to define the behavior of APISIX.
+apisix-control-plane is an implementation of providing a control plane for DPs (Data Plane) like apache apisix or other gateways. with a `yml` configuration capability, We can use `yml` to define the behavior of any DP.
 
 ## Why do we need to implement a control-plane
+
+for now, we have a default implementation for apache APISIX.
 
 As we knows, apache APISIX is a high-performance gateway. When using APISIX we need to inform apisix of some proxy rules, and distribute these rules to apisix modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
 

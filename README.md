@@ -21,25 +21,27 @@
 
 ## What is apisix-control-plane
 
-apisix-control-plane is an implementation of providing a control plane for DPs (Data Plane) like apache apisix or other gateways. with a `yml` configuration capability, We can use `yml` to define the behavior of any DP.
+apisix-control-plane is an implementation of providing a control plane for DPs (Data Plane) like Apache APISIX or other gateways. with a `yaml` configuration capability, We can use `yaml` to define the behavior of any DP.
 
 ## Why do we need to implement a control-plane
 
-for now, we have a default implementation for apache APISIX.
+For now, we have a default implementation for Apache APISIX.
 
-As we knows, apache APISIX is a high-performance gateway. When using APISIX we need to inform apisix of some proxy rules, and distribute these rules to apisix modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
+As we knows, Apache APISIX is a high-performance gateway. When using APISIX we need to inform apisix of some proxy rules, and distribute these rules to apisix modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
 
-We know that apisix already has admin api, so why do we need to implement a control-plane?
+We know that apisix already has Admin API, so why do we need to implement a control-plane?
 
-First of all, apache apisix admin api is a way to define a single object, such as a single object such as route / service / upstream / consumer, although it is also possible to completely define a route through a huge route object, and the upstream object is embedded in the route , But any minor changes will trigger the reconstruction of the route. Rebuilding the route is definitely not a good idea and reduce performance.
+First of all, Apache APISIX Admin API is a way to define a single object, such as a single object such as route / service / upstream / consumer, although it is also possible to completely define a route through a huge route object, and the upstream object is embedded in the route , But any minor changes will trigger the reconstruction of the route. Rebuilding the route is definitely not a good idea and reduce performance.
 
-In fact, leaving aside the admin api, what we need is a description method that can completely define the rules while maintaining the legibility of the admin api. Therefore, we have [discussion here](https://github.com/apache/apisix-control-plane/blob/master/doc/yaml_struct.md), and we have implemented a version of the basic functions according to this data structure , I hope everyone puts forward their views. We can also submit a PR to modify this [document](doc/yaml_struct.md).
+In fact, leaving aside the Admin API, what we need is a description method that can completely define the rules while maintaining the legibility of the Admin API. Therefore, we have [discussion here](https://github.com/apache/apisix-control-plane/blob/master/doc/yaml_struct.md), and we have implemented a version of the basic functions according to this data structure , I hope everyone puts forward their views. We can also submit a PR to modify this [document](doc/yaml_struct.md).
 
-Secondly, apache apisix admin api uses id associations to strongly bind objects to express the relationship between objects. For example, the route object uses service_id and upstream_id to bind the relationship with service and upstream respectively.
+Secondly, Apache APISIX Admin API uses id associations to strongly bind objects to express the relationship between objects. For example, the route object uses `service_id` and `upstream_id` to bind the relationship with service and upstream respectively.
 
-This kind of representation, like the well-known relational database, is easier to understand and reduces redundant configurations. But it also brings some other problems. For example, rely on verification. When we want to bind an `upstreamId` to a route, we must first create the upstream, and then bind the generated `upstreamId` to the route. This process corresponds to two admin APIs, and there is no transaction management.
+This kind of representation, like the well-known relational database, is easier to understand and reduces redundant configurations. But it also brings some other problems. For example, rely on verification. When we want to bind an `upstream_id` to a route, we must first create the upstream, and then bind the generated `upstream_id` to the route. This process corresponds to two Admin APIs, and there is no transaction management.
 
 We hope that the emergence of control-plane can solve the above two problems.
+1. Use yaml declarative definition method to define complete rules.
+2. Block DP implementation details, describe object relationships in a unified way.
 
 Of course, with control-plane we can do more.
 
@@ -52,7 +54,7 @@ Realize the prototype of cross-cluster synchronization configuration through the
 1. Support the declarative definition of yaml.
 2. Use the memory database to synchronize the gateway status.
 3. Diff capabilities based on memory objects.
-4. sync / update the apisix configuration.
+4. Sync / update the apisix configuration.
 5. Support incremental synchronization.
 6. Support transaction processing.
 

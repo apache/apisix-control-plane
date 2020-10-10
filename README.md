@@ -27,9 +27,9 @@ apisix-control-plane is an implementation of providing a control plane for DPs (
 
 For now, we have a default implementation for Apache APISIX.
 
-As we knows, Apache APISIX is a high-performance gateway. When using APISIX we need to inform apisix of some proxy rules, and distribute these rules to apisix modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
+As we knows, Apache APISIX is a high-performance gateway. When using APISIX we need to inform APISIX of some proxy rules, and distribute these rules to APISIX modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
 
-We know that apisix already has Admin API, so why do we need to implement a control-plane?
+We know that APISIX already has Admin API, so why do we need to implement a control-plane?
 
 First of all, Apache APISIX Admin API is a way to define a single object, such as a single object such as route / service / upstream / consumer, although it is also possible to completely define a route through a huge route object, and the upstream object is embedded in the route , But any minor changes will trigger the reconstruction of the route. Rebuilding the route is definitely not a good idea and reduce performance.
 
@@ -45,7 +45,7 @@ We hope that the emergence of control-plane can solve the above two problems.
 
 Of course, with control-plane we can do more.
 
-For example, based on gitops configuration version management, it is also more convenient to use yaml to define apisix in k8s.
+For example, based on gitops configuration version management, it is also more convenient to use yaml to define APISIX in k8s.
 
 Realize the prototype of cross-cluster synchronization configuration through the control panel. In the future, we can also enrich the functions of the control plane and simplify management under the cluster mode of multi-platform hybrid deployment (k8s/vm). We can also shield specific implementations of APISIX and provide configuration functions for more types of gateways.
 
@@ -54,11 +54,18 @@ Realize the prototype of cross-cluster synchronization configuration through the
 1. Support the declarative definition of yaml.
 2. Use the memory database to synchronize the gateway status.
 3. Diff capabilities based on memory objects.
-4. Sync / update the apisix configuration.
+4. Sync / update the APISIX configuration.
 5. Support incremental synchronization.
 6. Support transaction processing.
 
 We created [apache/apisix-control-plane](https://github.com/apache/apisix-control-plane) to provide the basic implementation of the above features.
+
+We also plan to support the following features
+
+1. Support multiple DP configuration.
+2. Support pull/push two synchronization strategies.
+3. Support multi-DP hybrid cluster.
+4. Support migration between DPs.
 
 ![](doc/images/flow.png)
 

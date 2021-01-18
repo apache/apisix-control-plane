@@ -27,7 +27,7 @@ apisix-control-plane is an implementation of providing a control plane for DPs (
 
 For now, we have a default implementation for Apache APISIX.
 
-As we knows, Apache APISIX is a high-performance gateway. When using APISIX we need to inform APISIX of some proxy rules, and distribute these rules to APISIX modules. We can call it contol-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
+As we know, Apache APISIX is a high-performance gateway. When using APISIX we need to inform APISIX of some proxy rules, and distribute these rules to APISIX modules. We can call it control-plane, similar to pilot in istio. Of course, the distribution configuration is only the most basic function of the control plane.
 
 We know that APISIX already has Admin API, so why do we need to implement a control-plane?
 

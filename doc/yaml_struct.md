@@ -41,7 +41,7 @@ servers:
    - "b.foo.com"
 ```
 
-|  object/field   | describition |
+|  object/field   | description |
 |  ----  | ----  |
 | Gateway  | the type for Edge traffic  |
 | Gateway.servers  | Define edge traffic service list  |
@@ -83,7 +83,7 @@ http:
 
 ```
 
-|  object/field   | describition |
+|  object/field   | description |
 |  ----  | ----  |
 |  Rule  | the rule type for traffic |
 |  Rule.hosts  | Specify the list of accepted hosts |
@@ -110,7 +110,7 @@ subsets:
 
 ```
 
-|  object/field   | describition |
+|  object/field   | description |
 |  ----  | ----  |
 |  destinations  | Target service |
 | destinations.host | Target service internal host |

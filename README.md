@@ -31,9 +31,9 @@ As we know, Apache APISIX is a high-performance gateway. When using APISIX we ne
 
 We know that APISIX already has Admin API, so why do we need to implement a control-plane?
 
-First of all, Apache APISIX Admin API is a way to define a single object, such as a single object such as route / service / upstream / consumer, although it is also possible to completely define a route through a huge route object, and the upstream object is embedded in the route , But any minor changes will trigger the reconstruction of the route. Rebuilding the route is definitely not a good idea and reduce performance.
+First of all, Apache APISIX Admin API is a way to define a single object, such as a single object such as route / service / upstream / consumer, although it is also possible to completely define a route through a huge route object, and the upstream object is embedded in the route, But any minor changes will trigger the reconstruction of the route. Rebuilding the route is definitely not a good idea and reduce performance.
 
-In fact, leaving aside the Admin API, what we need is a description method that can completely define the rules while maintaining the legibility of the Admin API. Therefore, we have [discussion here](https://github.com/apache/apisix-control-plane/blob/master/doc/yaml_struct.md), and we have implemented a version of the basic functions according to this data structure , I hope everyone puts forward their views. We can also submit a PR to modify this [document](doc/yaml_struct.md).
+In fact, leaving aside the Admin API, what we need is a description method that can completely define the rules while maintaining the legibility of the Admin API. Therefore, we have [discussion here](https://github.com/apache/apisix-control-plane/blob/master/doc/yaml_struct.md), and we have implemented a version of the basic functions according to this data structure, I hope everyone puts forward their views. We can also submit a PR to modify this [document](doc/yaml_struct.md).
 
 Secondly, Apache APISIX Admin API uses id associations to strongly bind objects to express the relationship between objects. For example, the route object uses `service_id` and `upstream_id` to bind the relationship with service and upstream respectively.
 

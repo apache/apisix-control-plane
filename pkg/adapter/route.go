@@ -18,9 +18,10 @@
 package adapter
 
 import (
+	"reflect"
+
 	"github.com/apache/apisix-control-plane/pkg/dp/apisix"
 	"github.com/apache/apisix-control-plane/pkg/mem"
-	"reflect"
 )
 
 func ToRoute(r *mem.Route) *apisix.Route {
